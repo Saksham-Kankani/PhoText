@@ -1,0 +1,22 @@
+import express from "express";
+import cors from "cors";
+import "dotenv/config";
+import connectDB from "./config/mongodb.js";
+import userRouter from "./routes/userRoutes.js";
+const app = express();
+
+const PORT = process.env.PORT || 4000;
+
+app.use(cors())
+app.use(express.json())
+await connectDB()
+
+app.use('/api/user',userRouter)
+app.use('/api/image',userRouter)
+app.get("/", (req, res) => {
+  res.send("API Working");
+});
+
+app.listen(PORT, (req, res) => {
+  console.log(`Server running at port ${PORT}`);
+});
